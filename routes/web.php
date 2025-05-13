@@ -5,6 +5,18 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\ProductCategoryController;
 
+use App\Http\Controllers\Admin\ProductController;
+
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\OrderController;
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('products', ProductController::class);
+    Route::resource('customers', CustomerController::class);
+    Route::resource('orders', OrderController::class);
+});
+
+
 Route::get('/', [HomepageController::class, 'index'])->name('home');
 
 
@@ -23,9 +35,11 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::group(['prefix' => 'dashboard'], function () {
+Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () {
+    Route::resource('products', ProductController::class);  // Memindahkan products ke dalam dashboard
     Route::resource('categories', ProductCategoryController::class);
 });
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
