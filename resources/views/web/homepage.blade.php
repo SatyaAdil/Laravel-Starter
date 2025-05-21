@@ -1,33 +1,46 @@
 <x-layout>
-    <x-slot:title>{{ $title }}</x-slot>
+    <div class="container mt-4">
 
+        {{-- Categories Section --}}
+        <h3 class="mb-3">Categories</h3>
         <div class="row">
-            <h3>Categories</h3>
             @foreach($categories as $category)
-            <div class="col-2">
-                <div class="card">
-                    <img src="{{ $category['image'] }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $category['name'] }}</h5>
-                        <p class="card-text">
-                            {{ $category['description'] }}
-                        </p>
-                        <a href="/category/{{ $category['slug'] }}" class="btn btn-primary">Detail</a>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 d-flex flex-column">
+                    <img src="{{ Storage::url($category->image) }}" alt="{{ $category->name }}" class="card-img-top" style="height: 200px; object-fit: cover; object-position: center;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ $category->name }}</h5>
+                        <p class="card-text">{{ $category->description }}</p>
+                        <div class="mt-auto">
+                            <a href="/category/{{ $category->slug }}" class="btn btn-primary w-100">Detail</a>
+                        </div>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
 
-        <h3>Ini adalah halaman Homepage</h3>
-        <x-card></x-card>
-        <!-- Alert Component (diletakkan di bawah card) -->
-        <x-alert type="primary" message="A simple primary alert—check it out!" />
-        <x-alert type="secondary" message="A simple secondary alert—check it out!" />
-        <x-alert type="success" message="A simple success alert—check it out!" />
-        <x-alert type="danger" message="A simple danger alert—check it out!" />
-        <x-alert type="warning" message="A simple warning alert—check it out!" />
-        <x-alert type="info" message="A simple info alert—check it out!" />
-        <x-alert type="light" message="A simple light alert—check it out!" />
-        <x-alert type="dark" message="A simple dark alert—check it out!" />
+        <hr>
+
+        {{-- Products Section --}}
+        <h3 class="mb-3 mt-5">Products</h3>
+        <div class="row">
+            @foreach($products as $product)
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 d-flex flex-column">
+                    <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="card-img-top" style="height: 200px; object-fit: cover; object-position: center;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ $product->name }}</h5>
+                        <p class="card-text">{{ Str::limit($product->description, 50) }}</p>
+                        <p class="card-text"><strong>Rp {{ number_format($product->price, 0, ',', '.') }}</strong></p>
+                        <div class="mt-auto">
+                            <a href="/product/{{ $product->slug }}" class="btn btn-success w-100">Detail</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+    </div>
 </x-layout>
