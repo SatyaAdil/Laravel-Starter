@@ -1,5 +1,18 @@
 <x-layout>
-    <div class="container mt-4">
+    <div class="container-fluid text-center text-white d-flex align-items-center justify-content-center" 
+        style="background: url('{{ asset('https://png.pngtree.com/thumb_back/fh260/background/20230718/pngtree-d-rendered-concept-of-a-mobile-shopping-app-for-online-stores-image_3911957.jpg') }}') center center / cover no-repeat; height: 100vh;">
+        <div class="bg-dark bg-opacity-50 p-5 rounded">
+            <h1 class="display-4 fw-bold mb-3">Selamat Datang di E-Commerce Kami!</h1>
+            <p class="lead mb-4">Temukan produk terbaik dan kategori pilihan untuk memenuhi semua kebutuhan Anda.</p>
+            <a href="{{ route('products') }}" class="btn btn-warning btn-lg px-4">Jelajahi Sekarang</a>
+        </div>
+    </div>
+</x-layout>
+
+
+
+
+    <!-- <div class="container mt-4">
 
         {{-- Categories Section --}}
         <h3 class="mb-3">Categories</h3>
@@ -42,5 +55,5 @@
             @endforeach
         </div>
 
-    </div>
-</x-layout>
+    </div> -->
+

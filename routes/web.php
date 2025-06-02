@@ -7,6 +7,20 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 
+use App\Http\Controllers\CustomerAuthController; 
+
+Route::group(['prefix'=>'customer'], function(){ 
+    Route::controller(CustomerAuthController::class)->group(function(){ 
+        Route::get('login','login')->name('customer.login');  
+        Route::post('login','store_login')->name('customer.store_login'); 
+        Route::get('register','register')->name('customer.register'); 
+        Route::post('register','store_register')->name('customer.store_register');
+        Route::post('logout', 'logout')->name('customer.logout');
+        
+    }); 
+});
+
+
 
 
 Route::get('/',[HomepageController::class,'index'])->name('home');
@@ -21,17 +35,13 @@ Route::patch('/products/{id}/toggle-status', [ProductController::class, 'toggleS
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
-
-//membuat prefix url untuk admin, dengan prefix dashboard
+    
 Route::group(['prefix'=>'dashboard'], function(){
-    //kode nya disini
     Route::resource('categories',ProductCategoryController::class);
 });
-
 Route::prefix('/dashboard')->middleware(['auth'])->group(function () {
     Route::resource('products', ProductController::class);
 });
-
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
