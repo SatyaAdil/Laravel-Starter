@@ -1,13 +1,32 @@
 <x-layout>
-    <div class="container-fluid text-center text-white d-flex align-items-center justify-content-center" 
-        style="background: url('{{ asset('https://png.pngtree.com/thumb_back/fh260/background/20230718/pngtree-d-rendered-concept-of-a-mobile-shopping-app-for-online-stores-image_3911957.jpg') }}') center center / cover no-repeat; height: 100vh;">
-        <div class="bg-dark bg-opacity-50 p-5 rounded">
-            <h1 class="display-4 fw-bold mb-3">Selamat Datang di E-Commerce Kami!</h1>
-            <p class="lead mb-4">Temukan produk terbaik dan kategori pilihan untuk memenuhi semua kebutuhan Anda.</p>
-            <a href="{{ route('products') }}" class="btn btn-warning btn-lg px-4">Jelajahi Sekarang</a>
+    <!-- Tambahkan ke layout (resources/views/components/layout.blade.php) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+</style>
+
+    <div class="position-relative" style="height: 100vh; background: url('https://png.pngtree.com/thumb_back/fh260/background/20230718/pngtree-d-rendered-concept-of-a-mobile-shopping-app-for-online-stores-image_3911957.jpg') center center / cover no-repeat;">
+        <!-- Overlay -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-75"></div>
+
+        <!-- Content -->
+        <div class="position-relative z-1 d-flex flex-column justify-content-center align-items-center text-center text-white h-100 px-4">
+            <h1 class="display-3 fw-bold mb-3" style="text-shadow: 0 4px 10px rgba(0,0,0,0.7);">
+                Selamat Datang di <span class="text-warning">E-Commerce</span> Kami
+            </h1>
+            <p class="lead mb-4 fs-5" style="max-width: 700px;">
+                Temukan produk terbaik, promo eksklusif, dan pengalaman belanja yang menyenangkan hanya untuk Anda.
+            </p>
+            <a href="{{ route('products') }}" class="btn btn-warning btn-lg px-5 py-3 shadow-lg rounded-pill">
+                ✨ Jelajahi Sekarang
+            </a>
         </div>
     </div>
 </x-layout>
+
+
 
 
 

@@ -6,8 +6,12 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
-
 use App\Http\Controllers\CustomerAuthController; 
+use App\Http\Controllers\ApiController;
+
+Route::get('/api-data', [ApiController::class, 'getApiData'])->name('api.data');
+
+
 
 Route::group(['prefix'=>'customer'], function(){ 
     Route::controller(CustomerAuthController::class)->group(function(){ 
