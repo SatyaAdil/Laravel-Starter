@@ -2,16 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-// Panggil controller-nya
+//panggil dulu controllernya
 use App\Http\Controllers\Api\ProductCategoryController;
 use App\Http\Controllers\Api\ProductController;
 
-
-Route::apiResource('/product-categories', ProductCategoryController::class)->only('index','store','show'); 
-Route::apiResource('/products', ProductController::class)->only('index','store','show');
-
-// Route untuk mendapatkan data user yang terautentikasi
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::apiResource('/product-categories', ProductCategoryController::class)->only('index', 'store');
+Route::apiResource('/products', ProductController::class)->only('index', 'store');
+Route::get('/user', function (Request $request) {
     return $request->user();
-});
+})->middleware('auth:sanctum');

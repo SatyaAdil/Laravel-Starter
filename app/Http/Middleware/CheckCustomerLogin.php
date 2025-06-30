@@ -11,16 +11,14 @@ class CheckCustomerLogin
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->guard('customer')->check()) { 
+        // Periksa apakah ada customer yang sudah login (misalnya, session aktif)
+        if (auth()->guard('customer')->check()) {
             return redirect()->route('home'); // Redirect ke halaman home atau profile customer
         }
-
-        return $next($request);
+        return $next($request); // Jika sudah login, lanjutkan ke route berikutnya
     }
 }

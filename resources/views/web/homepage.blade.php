@@ -1,78 +1,67 @@
-<x-layout>
-    <!-- Tambahkan ke layout (resources/views/components/layout.blade.php) -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-    }
-</style>
-
-    <div class="position-relative" style="height: 100vh; background: url('https://png.pngtree.com/thumb_back/fh260/background/20230718/pngtree-d-rendered-concept-of-a-mobile-shopping-app-for-online-stores-image_3911957.jpg') center center / cover no-repeat;">
-        <!-- Overlay -->
-        <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-75"></div>
-
-        <!-- Content -->
-        <div class="position-relative z-1 d-flex flex-column justify-content-center align-items-center text-center text-white h-100 px-4">
-            <h1 class="display-3 fw-bold mb-3" style="text-shadow: 0 4px 10px rgba(0,0,0,0.7);">
-                Selamat Datang di <span class="text-warning">E-Commerce</span> Kami
-            </h1>
-            <p class="lead mb-4 fs-5" style="max-width: 700px;">
-                Temukan produk terbaik, promo eksklusif, dan pengalaman belanja yang menyenangkan hanya untuk Anda.
-            </p>
-            <a href="{{ route('products') }}" class="btn btn-warning btn-lg px-5 py-3 shadow-lg rounded-pill">
-                ✨ Jelajahi Sekarang
-            </a>
+    <x-layout>
+        <x-slot name="title"> Homepage</x-slot>
+        <div class="container py-3">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 style="font-size: 1.5rem;">Kategori Product</h3>
+                <a href="{{ URL::to('/categories') }}" class="btn btn-outline-primary
+    btn-sm">Lihat Semua Kategori</a>
+            </div>
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+                @foreach ($categories as $category)
+                    <div class="col">
+                        <a href="{{ URL::to('/category/' . $category->slug) }}" class="card
+    text-decoration-none">
+                            <div class="card category-card text-center h-100 py-3 border-0
+    shadow-sm">
+                                <div class="mx-auto mb-2"
+                                    style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;bac
+    kground:#f8f9fa;border-radius:50%;">
+                                    <img src="{{ $category->image }}" alt="{{ $category->name }}"
+                                        style="width:36px;height:36px;object-fit:contain;">
+                                </div>
+                                <div class="card-body p-2">
+                                    <h6 class="card-title mb-1 text-dark">{{ $category->name }}</h6>
+                                    <p class="card-text text-muted small text-truncate">{{ $category->description }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
         </div>
-    </div>
-</x-layout>
-
-
-
-
-
-
-    <!-- <div class="container mt-4">
-
-        {{-- Categories Section --}}
-        <h3 class="mb-3">Categories</h3>
-        <div class="row">
-            @foreach($categories as $category)
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 d-flex flex-column">
-                    <img src="{{ Storage::url($category->image) }}" alt="{{ $category->name }}" class="card-img-top" style="height: 200px; object-fit: cover; object-position: center;">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ $category->name }}</h5>
-                        <p class="card-text">{{ $category->description }}</p>
-                        <div class="mt-auto">
-                            <a href="/category/{{ $category->slug }}" class="btn btn-primary w-100">Detail</a>
+        <div class="container py-3">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 style="font-size: 1.5rem;">Product Kami</h3>
+                <a href="{{ URL::to('/products') }}" class="btn btn-outline-primary
+    btn-sm">Lihat Semua Product</a>
+            </div>
+            <div class="row">
+                @forelse($products as $product)
+                    <div class="col-md-3 mb-4">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="{{ $product->image_url ? $product->image_url : 'https://via.placeholder.com/350x200?text=No+Image' }}"
+                                class="card-img-top" alt="{{ $product->name }}">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <p class="card-text text-truncate">{{ $product->description }}</p>
+                                <div class="mt-auto">
+                                    <span class="fw-bold text-primary">Rp
+                                        {{ number_format($product->price, 0, ',', '.') }}</span>
+                                    <a href="{{ route('product.show', $product->slug) }}"
+                                        class="btn btn-outline-primary btn-sm float-end">Lihat Detail</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-
-        <hr>
-
-        {{-- Products Section --}}
-        <h3 class="mb-3 mt-5">Products</h3>
-        <div class="row">
-            @foreach($products as $product)
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 d-flex flex-column">
-                    <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="card-img-top" style="height: 200px; object-fit: cover; object-position: center;">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ $product->name }}</h5>
-                        <p class="card-text">{{ Str::limit($product->description, 50) }}</p>
-                        <p class="card-text"><strong>Rp {{ number_format($product->price, 0, ',', '.') }}</strong></p>
-                        <div class="mt-auto">
-                            <a href="/product/{{ $product->slug }}" class="btn btn-success w-100">Detail</a>
-                        </div>
+                @empty
+                    <div class="col">
+                        <div class="alert alert-info">Belum ada produk pada kategori
+                            ini.</div>
                     </div>
+                @endforelse
+                <div class="d-flex justify-content-center w-100 mt-4">
+                    {{ $products->links('vendor.pagination.bootstrap-5') }}
                 </div>
             </div>
-            @endforeach
         </div>
-
-    </div> -->
-
+    </x-layout>
